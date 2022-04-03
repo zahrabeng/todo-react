@@ -17,7 +17,6 @@ export default function Main(): JSX.Element {
 
   const handleSearch = (e: string) => {
     setSearchText(e);
-    console.log(searchText);
   };
 
   const eachToDo = toDo.map((toDo) => <p key={toDo.id}>{toDo.task}</p>);
@@ -31,6 +30,7 @@ export default function Main(): JSX.Element {
           value={searchText}
           onChange={(e) => handleSearch(e.target.value)}
         ></input>
+        <button >Click to Add</button>
       </div>
       {eachToDo}
     </>
