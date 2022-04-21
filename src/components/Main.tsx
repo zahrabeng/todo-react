@@ -2,39 +2,41 @@ import { useState } from "react";
 import { useEffect } from "react";
 import IntTodo from "./ToDoTypes";
 import axios from "axios";
-//const axios = require('axios');
 
 export default function Main(): JSX.Element {
   const [toDo, setToDo] = useState<IntTodo[]>([]);
   const [searchText, setSearchText] = useState<string>("");
 
 
-  useEffect(() => {
-    const getAllToDos = async () => {
-      const response = await fetch("http://localhost:4000/items");
-      const allToDos: IntTodo[] = await response.json();
-      setToDo([...allToDos]);
-    };
-    getAllToDos();
-  }, [toDo]);
+  // useEffect(() => {
+  //   const getAllToDos = async () => {
+  //     const response = await fetch("http://localhost:5000/items");
+  //     const allToDos: IntTodo[] = await response.json();
+  //     setToDo([...allToDos]);
+  //   };
+  //   getAllToDos();
+  // }, [toDo]);
 
-  axios({
-    method: 'post',
-    url: '/item',
-    data: {
-      task:""
-    }
-  });
+useEffect(() => {
+  async function getAllToDos(){
+  const allToDos = await axios.get(`http://localhost:5000/items`);
+  const data:IntTodo[] = allToDos.data
+  setToDo([...data])
+}
+getAllToDos()
+}, [toDo]);
+
 
   const handleSearch = (e: string) => {
     setSearchText(e);
   };
 
   const handleInputClick = (text:string) =>{
-    setToDo([...toDo, ])
+    
+    setToDo([...toDo,  ])
   }
 
-  const eachToDo = toDo.map((toDo: IntTodo) => <p key={toDo.id}>{toDo.task}</p>);
+  const eachToDo = toDo.map((toDo: IntTodo) => <li key={toDo.id}>{toDo.task} </li>);
 
   return (
     <>
@@ -47,7 +49,9 @@ export default function Main(): JSX.Element {
         ></input>
         <button >Click to Add</button>
       </div>
-      {eachToDo}
+      <ul>
+        {eachToDo}
+      </ul>
     </>
   );
 }
