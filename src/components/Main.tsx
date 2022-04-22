@@ -7,6 +7,7 @@ export default function Main(): JSX.Element {
   const [toDo, setToDo] = useState<IntTodo[]>([]);
   const [searchText, setSearchText] = useState<string>("");
 
+  const mainListURL = "http://localhost:5000/items"
 
   // useEffect(() => {
   //   const getAllToDos = async () => {
@@ -19,7 +20,7 @@ export default function Main(): JSX.Element {
 
 useEffect(() => {
   async function getAllToDos(){
-  const allToDos = await axios.get(`http://localhost:5000/items`);
+  const allToDos = await axios.get(mainListURL);
   const data:IntTodo[] = allToDos.data
   setToDo([...data])
 }
@@ -27,14 +28,20 @@ getAllToDos()
 }, [toDo]);
 
 
+
+
   const handleSearch = (e: string) => {
     setSearchText(e);
   };
 
-  const handleInputClick = (text:string) =>{
-    
-    setToDo([...toDo,  ])
+
+
+  const handleInputClick = () =>{
+    const toDoObj:IntTodo = {
+      task: searchText}
+    axios.post(mainListURL, toDoObj)
   }
+
 
   const eachToDo = toDo.map((toDo: IntTodo) => <li key={toDo.id}>{toDo.task} </li>);
 
@@ -47,7 +54,8 @@ getAllToDos()
           value={searchText}
           onChange={(e) => handleSearch(e.target.value)}
         ></input>
-        <button >Click to Add</button>
+        <button onClick={handleInputClick}>Click to Add</button>
+        <input type="checkbox" placeholder="done?"></input>
       </div>
       <ul>
         {eachToDo}
