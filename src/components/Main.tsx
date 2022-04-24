@@ -51,18 +51,17 @@ export default function Main(): JSX.Element {
       return (
         <>
           <li style={{ textDecorationLine: "line-through" }} key={toDo.id}>
-            {toDo.task}
+            {toDo.task}✔️
           </li>{" "}
           <button onClick={() => handleDelete(toDo.id)}>delete</button>
         </>
       );
   });
 
-  //style={{ textDecorationLine: 'line-through' }}
   return (
     <>
       <h1>List of To Do's</h1>
-      <p>Please add in your To Do and tick the checkbox if it is completed:</p>
+      <p>Please add in your To-Do and tick the checkbox if it is completed:</p>
       <div>
         <input
           placeholder="Add To Do..."
