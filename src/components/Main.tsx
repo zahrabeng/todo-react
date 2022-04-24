@@ -29,33 +29,34 @@ getAllToDos()
 
   const handleInputClick = () =>{
     const toDoObj:IntTodo = {
-      task: searchText}
+      task: searchText,
+      done:checked
+    }
     axios.post(mainListURL, toDoObj)
-    console.log()
   }
 
 
   const handleCheck = () => {
     setChecked(!checked);
-    console.log(checked)
   };
 
 
-  const eachToDo = toDo.map((toDo: IntTodo) => <li key={toDo.id}>{toDo.task} </li>);
+  const eachToDo = toDo.map((toDo: IntTodo) => {if(toDo.done === true) return <li key={toDo.id}>{toDo.task}</li> ; 
+  else if(toDo.done === false) return <li style={{ textDecorationLine: 'line-through' }} key={toDo.id}>{toDo.task}</li>});
 
   //style={{ textDecorationLine: 'line-through' }}
   return (
     <>
       <h1>List of To Do's</h1>
-      
+      <p>Please add in your To Do and tick the checkbox if it is completed:</p>
       <div>
         <input
           placeholder="Add To Do..."
           value={searchText}
           onChange={(e) => handleSearch(e.target.value)}
         ></input>
-        <button onClick={handleInputClick}>Click to Add</button>
         <input type="checkbox" onClick={handleCheck}></input>
+        <button onClick={handleInputClick}>Click to Add</button>
       </div>
       <ul>
         {eachToDo}
