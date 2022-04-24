@@ -35,11 +35,11 @@ export default function Main(): JSX.Element {
     setChecked(!checked);
   };
 
+  
   const handleDelete = (id:any) => {
     axios.delete(`http://localhost:5000/items/${id}`)
   }
 
-  const deleteButton = <button onClick={handleDelete}>delete</button>;
 
   const eachToDo = toDo.map((toDo: IntTodo) => {
     if (toDo.done === true) return <><li key={toDo.id}>{toDo.task}</li> <button onClick={()=> handleDelete(toDo.id)}>delete</button> </> ;
