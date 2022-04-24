@@ -35,19 +35,26 @@ export default function Main(): JSX.Element {
     setChecked(!checked);
   };
 
-  
-  const handleDelete = (id:any) => {
-    axios.delete(`http://localhost:5000/items/${id}`)
-  }
-
+  const handleDelete = (id: any) => {
+    axios.delete(`http://localhost:5000/items/${id}`);
+  };
 
   const eachToDo = toDo.map((toDo: IntTodo) => {
-    if (toDo.done === true) return <><li key={toDo.id}>{toDo.task}</li> <button onClick={()=> handleDelete(toDo.id)}>delete</button> </> ;
+    if (toDo.done === true)
+      return (
+        <>
+          <li key={toDo.id}>{toDo.task}</li>{" "}
+          <button onClick={() => handleDelete(toDo.id)}>delete</button>{" "}
+        </>
+      );
     else if (toDo.done === false)
       return (
-        <><li style={{ textDecorationLine: "line-through" }} key={toDo.id}>
-          {toDo.task}
-        </li> <button onClick={()=> handleDelete(toDo.id)}>delete</button></>
+        <>
+          <li style={{ textDecorationLine: "line-through" }} key={toDo.id}>
+            {toDo.task}
+          </li>{" "}
+          <button onClick={() => handleDelete(toDo.id)}>delete</button>
+        </>
       );
   });
 
