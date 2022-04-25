@@ -29,6 +29,7 @@ export default function Main(): JSX.Element {
       done: checked,
     };
     axios.post(mainListURL, toDoObj);
+
   };
 
   const handleCheck = () => {
@@ -38,6 +39,11 @@ export default function Main(): JSX.Element {
   const handleDelete = (id: any) => {
     axios.delete(`http://localhost:5000/items/${id}`);
   };
+
+  const handleEdit = () => {
+    console.log(1234);
+
+  }
 
   const eachToDo = toDo.map((toDo: IntTodo) => {
     if (toDo.done === true)
@@ -72,6 +78,7 @@ export default function Main(): JSX.Element {
         <button onClick={handleInputClick}>Click to Add</button>
       </div>
       <ul>{eachToDo}</ul>
+      <button onClick={handleEdit}>Edit To-Do</button>
     </>
   );
 }
