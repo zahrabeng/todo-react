@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useEffect } from "react";
 import IntTodo from "./ToDoTypes";
 import axios from "axios";
+import { config } from "dotenv";
 
 export default function Main(): JSX.Element {
   const [toDo, setToDo] = useState<IntTodo[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [checked, setChecked] = useState<boolean>(true);
 
-  const mainListURL = "http://localhost:5000/items";
+  config();
+
+  const mainListURL = "https://to-do-2022.herokuapp.com/";
 
   useEffect(() => {
     async function getAllToDos() {
@@ -28,8 +31,7 @@ export default function Main(): JSX.Element {
       task: searchText,
       done: checked,
     };
-    axios.post(mainListURL, toDoObj);
-
+    axios.post(`${mainListURL}todo`, toDoObj);
   };
 
   const handleCheck = () => {
@@ -37,31 +39,26 @@ export default function Main(): JSX.Element {
   };
 
   const handleDelete = (id: any) => {
-    axios.delete(`http://localhost:5000/items/${id}`);
+    axios.delete(`${mainListURL}todo/${id}`);
   };
 
   const handleEdit = () => {
     console.log(1234);
-
-  }
+  };
 
   const eachToDo = toDo.map((toDo: IntTodo) => {
-    if (toDo.done === true)
-      return (
-        <>
-          <li key={toDo.id}>{toDo.task}</li>{" "}
-          <button onClick={() => handleDelete(toDo.id)}>delete</button>{" "}
-        </>
-      );
-    else if (toDo.done === false)
-      return (
-        <>
+    return (
+      <>
+        {toDo.done ? (
+          <li key={toDo.id}>{toDo.task}</li>
+        ) : (
           <li style={{ textDecorationLine: "line-through" }} key={toDo.id}>
             {toDo.task}✔️
-          </li>{" "}
-          <button onClick={() => handleDelete(toDo.id)}>delete</button>
-        </>
-      );
+          </li>
+        )}
+        <button onClick={() => handleDelete(toDo.id)}>delete</button>
+      </>
+    );
   });
 
   return (
