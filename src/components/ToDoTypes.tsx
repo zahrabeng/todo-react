@@ -1,5 +1,5 @@
 export default interface IntTodo {
-  id?: number;
+  id: number;
   task: string;
   done?: boolean;
 }
